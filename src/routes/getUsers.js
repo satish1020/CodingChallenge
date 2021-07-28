@@ -1,5 +1,6 @@
 'use strict';
 const mockDBCalls = require('../database/index.js');
+// const cors = require('cors');
 
 const getUsersHandler = async (request, response) => {
     const data = await mockDBCalls.getUsers();
