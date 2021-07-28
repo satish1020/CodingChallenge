@@ -23,16 +23,12 @@ const getUsers = () => {
 
 const getListOfAgesOfUsersWith = (item) => {
     const dataAccessMethod = () => {
-        // fill me in :)
-        // based on item need to get all users from itemsOfUserByUsername
         const allUsersWithAge = _.values(db.usersById);
+        const usersWithAge = {};
         allUsersWithAge.forEach(user => {
             const { age, username } = user;
             usersWithAge[username] = age;
-        })
-
-
-       // { John: 18, Paul: 29, Rita: 12, Erica: 90, Tina: 90 }
+        });
 
         const selectedUsers = {};
         for (const username in db.itemsOfUserByUsername){
@@ -54,10 +50,10 @@ const getListOfAgesOfUsersWith = (item) => {
 }
 
 const getAllItems = () => {
-    //const allItemObject = new Set();
-
-    const dataAccessMethod = () => _.map(db.allItems, item => item);
-    return mockDBCall(dataAccessMethod)
+    // Using Flow of loadash, which calls from left to right values,flattern,unoq..
+    const uValues = _.flow([_.values, _.flatten, _.uniq]);
+    const dataAccessMethod = () => { return uValues(db.itemsOfUserByUsername)};
+    return mockDBCall(dataAccessMethod);
 }
 
 module.exports = {
