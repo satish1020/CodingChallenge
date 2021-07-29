@@ -1,0 +1,59 @@
+.container .headerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 45px;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.dropDown {
+    width: 80px;
+    height: 38px;
+    background-color: rgb(55,122,181);
+    margin-top: 5px;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+}
+
+
+.bodyContainer {
+    margin-top: 40px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 500px;
+    padding: 5px;
+}
+
+.tHeader,
+.tBody 
+{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px  solid black;
+    height: 45px;
+    justify-content: center;
+    align-items: center;
+}
+
+.tCol {
+    width: 250px;
+}
+
+.tTitle {
+    font-size: 16px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.tbTitle {
+    font-size: 14px;
+    text-align: left;
+}

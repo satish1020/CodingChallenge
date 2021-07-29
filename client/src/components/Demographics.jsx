@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Network from '../network/index';
+import '../Styles/Demographics.css';
 
 const { Paths, API } = Network;
 
@@ -45,18 +46,31 @@ function Demographics(props) {
         selectValue(value);
     }
     return (
-        <div>
-            All Demographcis with users Age
-            <select value={value} onChange={handleOptionsChange}>
-                { options.map(item => {
-                    return <option value={item} key={item}>{item}</option>
-                })}
-            </select>
-            {
-                optionsWithAge.map(item => {
-                    return <div>{`${item.age} ---- ${item.count}`}</div>
-                })
-            }
+        <div className="container">
+            <div className="headerContainer">
+                <div className="title">All Demographcis with users Age</div>
+                <select className="dropDown" value={value} onChange={handleOptionsChange}>
+                    { options.map(item => {
+                        return <option value={item} key={item}>{item}</option>
+                    })}
+                </select>
+            </div>
+            { optionsWithAge.length > 0 &&  (<div className="bodyContainer">
+                <div className="tHeader">
+                    <div className="tCol tTitle">Age</div>
+                    <div className="tCol tTitle">Count</div>
+                </div>
+                {
+                    optionsWithAge.map(item => {
+                        return (
+                            <div className="tBody">
+                                <div className="tCol tbTitle">{item.age}</div>
+                                <div className="tCol tbTitle">{item.count}</div>
+                            </div>
+                        )
+                    })
+                }
+            </div>) }
         </div>
     )
 }

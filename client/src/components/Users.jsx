@@ -1,14 +1,11 @@
-import React,{useState, useEffect, Fragment} from 'react'
-import UserItem from './UserItem.js';
+import React,{useState, useEffect} from 'react'
+import '../Styles/Users.css';
 import Network from '../network/index';
 
 const { Paths, API } = Network;
 
 function Users() {
-
     const [users,setUsers] =  useState([]);
-   
-
     const fetchAllUsers = async () => {
         const getUsersUrl = Paths.getUsers();
         try {
@@ -23,15 +20,29 @@ function Users() {
         fetchAllUsers();
     }, []);
 
-   
 
     return (
-        <div>
-            <h1>All Users</h1>
-            <h2>Users and their Age</h2>
-            <>
-                {users.map((user, index) => ( <UserItem key={index} {...user}/>))}
-            </>
+         <div className="userContainer">
+             <div  className="headerContainer">
+                <div className="mainHeader">All Users</div>
+                <div className="subHeader">Users and their age</div>
+            </div>
+            <table className="table">
+            <thead>
+                <tr>
+                  <th><p>Username</p></th>
+                  <th><p>Age</p></th>
+                </tr>
+              </thead>
+        <tbody>
+            { users.map((user, index) => 
+              <tr key={index}>
+              <td><p>{user.username} </p></td>
+              <td><small>{user.age}</small></td>
+              </tr>
+          )} 
+          </tbody>
+          </table>
         </div>
     )
 }
