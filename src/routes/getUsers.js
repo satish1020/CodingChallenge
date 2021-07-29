@@ -6,7 +6,6 @@ const getUsersHandler = async (request, response) => {
         const data = await mockDBCalls.getUsers(); // url
         return response.status(200).send(JSON.stringify(data));
     } catch(error){
-        console.log('======> error', error);
         return response.send(500, "There is some problem  here."); 
     }
     

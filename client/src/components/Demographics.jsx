@@ -15,11 +15,9 @@ function Demographics(props) {
         const getItemsUrl = Paths.getItems();
         try {
             const {data} = await API.get(getItemsUrl);
-            console.log('===> options', data);
             setOptions(data);
             setError('');
         } catch(error) {
-            console.log('error while getting all items for dropdown', error);
             setError('something went wrong while fetching age data')
         }
     }
@@ -36,7 +34,6 @@ function Demographics(props) {
             setOptionsWithAge(ageWithCount);
             setError('');
         } catch(error) {
-            console.log('error while getting all item value on selection of dropdown ', error);
             setError('something went wrong')
         }
     }

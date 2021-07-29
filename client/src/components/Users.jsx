@@ -16,7 +16,6 @@ function Users() {
             setUsers(data);
             setError('');
         } catch(error) {
-            console.log('error while getting all users', error);
             setError('something went wrong while fetching users')
         }
     }
