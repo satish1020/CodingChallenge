@@ -1,17 +1,30 @@
 'use strict';
 const mockDBCalls = require('../database/index.js');
 
-const getListOfAgesOfUsersWithHandler = async (request, response) => {
+const getListOfAgesOfUsersWithHandler = async (request, response, next) => {
     const { item } = request.body;
     const itemToLookup = item;
-    const data = await mockDBCalls.getListOfAgesOfUsersWith(itemToLookup);
-    console.log('*** output of post ***', data);
-    return response.status(200).send(JSON.stringify(data));
+    try {
+        const data = await mockDBCalls.getListOfAgesOfUsersWith(itemToLookup);
+        console.log('*** output of post ***', data);
+        return response.status(200).send(JSON.stringify(data));
+    } catch(error){
+        console.log('======> error', error);
+        return response.send(500, "There is some problem  here."); 
+    }
+    
 };
 
 const getAllDropDownItems = async (request, response) => {
-    const data = await mockDBCalls.getAllItems();
-    return response.status(200).send(JSON.stringify(data));
+
+    try {
+        const data = await mockDBCalls.getAllItems();
+        return response.status(200).send(JSON.stringify(data));
+    } catch(error){
+        console.log('======> error', error);
+        return response.send(500, "There is some problem  here."); 
+    }
+    
 }
 
 module.exports = (app) => {

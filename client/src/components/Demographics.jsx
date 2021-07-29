@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { useState, useEffect } from 'react'
 import Network from '../network/index';
 import '../Styles/Demographics.css';
@@ -7,6 +8,7 @@ const { Paths, API } = Network;
 function Demographics(props) {
     const [options,setOptions] =  useState([]);
     const [value, selectValue] = useState([]);
+    const [error, setError] = useState('');
     const [optionsWithAge, setOptionsWithAge] = useState([]);
 
     const fetchDropdownOptions = async () => {
@@ -15,8 +17,10 @@ function Demographics(props) {
             const {data} = await API.get(getItemsUrl);
             console.log('===> options', data);
             setOptions(data);
+            setError('');
         } catch(error) {
             console.log('error while getting all items for dropdown', error);
+            setError('something went wrong while fetching age data')
         }
     }
 
@@ -30,8 +34,10 @@ function Demographics(props) {
                 ageWithCount.push({ age, count});
             }
             setOptionsWithAge(ageWithCount);
+            setError('');
         } catch(error) {
             console.log('error while getting all item value on selection of dropdown ', error);
+            setError('something went wrong')
         }
     }
 
@@ -48,7 +54,7 @@ function Demographics(props) {
     return (
         <div className="container">
             <div className="headerContainer">
-                <div className="title">All Demographcis with users Age</div>
+                <div className="title">All Demographic of users with</div>
                 <select className="dropDown" value={value} onChange={handleOptionsChange}>
                     { options.map(item => {
                         return <option value={item} key={item}>{item}</option>
@@ -71,6 +77,9 @@ function Demographics(props) {
                     })
                 }
             </div>) }
+            {
+                !_.isEmpty(error) && <div className="error">{error}</div>
+            }
         </div>
     )
 }

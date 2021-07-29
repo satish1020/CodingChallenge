@@ -8,8 +8,13 @@ const db = require('./db.js');
 // This is a mock db call that waits for # milliseconds and returns
 const mockDBCall = (dataAccessMethod) => {
     return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve(dataAccessMethod());
+        setTimeout(async () => {
+            try {
+                const data = await dataAccessMethod();
+                resolve(data);
+            } catch(error) {
+                reject(error);
+            }
         }, 500);
     });
 };
@@ -22,31 +27,32 @@ const getUsers = () => {
 };
 
 const getListOfAgesOfUsersWith = (item) => {
-    const dataAccessMethod = () => {
-        const allUsersWithAge = _.values(db.usersById);
-        const usersWithAge = {};
-        allUsersWithAge.forEach(user => {
-            const { age, username } = user;
-            usersWithAge[username] = age;
-        });
-
-        const selectedUsers = {};
-        for (const username in db.itemsOfUserByUsername){
-            const optionsValue = db.itemsOfUserByUsername[username] || [];
-            if(optionsValue.includes(item)){    
-                let ageForUser = usersWithAge[username];
-                if(selectedUsers[ageForUser]){
-                    const count = selectedUsers[ageForUser];
-                    selectedUsers[ageForUser] = count + 1;
-                } else {
-                    selectedUsers[ageForUser] = 1;
+        const dataAccessMethod = () => {
+            const allUsersWithAge = _.values(db.usersById);
+            const usersWithAge = {};
+            allUsersWithAge.forEach(user => {
+                const { age, username } = user;
+                usersWithAge[username] = age;
+            });
+    
+            const selectedUsers = {};
+            for (const username in db.itemsOfUserByUsername){
+                const optionsValue = db.itemsOfUserByUsername[username] || [];
+                if(optionsValue.includes(item)){    
+                    let ageForUser = usersWithAge[username];
+                    if(selectedUsers[ageForUser]){
+                        const count = selectedUsers[ageForUser];
+                        selectedUsers[ageForUser] = count + 1;
+                    } else {
+                        selectedUsers[ageForUser] = 1;
+                    }
                 }
             }
+            return selectedUsers;
+    
         }
-        return selectedUsers;
-
-    }
-    return mockDBCall(dataAccessMethod);
+        return mockDBCall(dataAccessMethod);
+    
 }
 
 const getAllItems = () => {
